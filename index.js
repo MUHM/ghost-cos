@@ -2,7 +2,7 @@
  * @Author: MUHM
  * @Date: 2019-04-30 16:10:23
  * @Last Modified by: MUHM
- * @Last Modified time: 2019-04-30 20:58:01
+ * @Last Modified time: 2019-04-30 21:09:50
  */
 'use strict';
 
@@ -55,7 +55,7 @@ class TencentCOS extends BaseStorage {
         if (err) {
           reject(err);
         }
-        resolve(this.baseUrl + params.Key);
+        resolve(this.baseUrl + data.Key);
       });
     });
   }
