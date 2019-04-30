@@ -2,7 +2,7 @@
  * @Author: MUHM
  * @Date: 2019-04-30 16:10:23
  * @Last Modified by: MUHM
- * @Last Modified time: 2019-04-30 23:24:36
+ * @Last Modified time: 2019-04-30 23:25:13
  */
 'use strict';
 
@@ -21,7 +21,6 @@ class TencentCOS extends BaseStorage {
   exists(filename, targetDir = this.getTargetDir('/')) {
     return new Promise((resolve) => {
       // headOject方法 404
-      console.log(path.resolve(targetDir, filename));
       this.client.getObjectAcl({
         Bucket: this.config.bucket,
         Region: this.config.region,
