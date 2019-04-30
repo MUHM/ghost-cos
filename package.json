@@ -1,0 +1,28 @@
+{
+  "name": "ghost-tencent-cos",
+  "version": "1.0.0",
+  "description": "saves to Tencent Cloud Object Storage",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MUHM/ghost-tencent-cos.git"
+  },
+  "keywords": [
+    "tencentcloud",
+    "cos",
+    "ghost"
+  ],
+  "author": "muhm",
+  "license": "Anti 996",
+  "bugs": {
+    "url": "https://github.com/MUHM/ghost-tencent-cos/issues"
+  },
+  "homepage": "https://github.com/MUHM/ghost-tencent-cos#readme",
+  "dependencies": {
+    "cos-nodejs-sdk-v5": "^2.5.9",
+    "ghost-storage-base": "0.0.3"
+  }
+}
