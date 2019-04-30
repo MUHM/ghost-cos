@@ -2,12 +2,13 @@
  * @Author: MUHM
  * @Date: 2019-04-30 16:10:23
  * @Last Modified by: MUHM
- * @Last Modified time: 2019-04-30 19:32:45
+ * @Last Modified time: 2019-04-30 20:58:01
  */
 'use strict';
 
 const BaseStorage = require('ghost-storage-base');
 const COS = require('cos-nodejs-sdk-v5');
+const path = require('path');
 
 class TencentCOS extends BaseStorage {
   constructor(config) {
@@ -20,8 +21,8 @@ class TencentCOS extends BaseStorage {
       baseUrl
     } = config;
     this.client = new COS({ secretId, secretKey });
-    this.bucket = Bucket;
-    this.region = Region;
+    this.bucket = bucket;
+    this.region = region;
     this.baseUrl = baseUrl;
   }
 

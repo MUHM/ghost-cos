@@ -3,8 +3,8 @@
     {
       ...
       "storage": {
-        "active": "ghost-tencent-cos",
-        "ghost-tencent-cos": {
+        "active": "tencent-cos",
+        "tencent-cos": {
           "bucket": "{BucketName}-{AppId}",
           "region": "{BucketRegion}",
           "secretId": "{SecretId}",
