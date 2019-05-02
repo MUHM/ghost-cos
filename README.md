@@ -4,7 +4,7 @@ A simple plugin to add Tencent Cloud Object Storage support for a Ghost Blog 2.x
     cd [path/to/ghost]
     npm install --save ghost-tencent-cos
 # Create storage module
-Create a script named "tencent-cos", content as follow:
+Create a script named "tencent-cos", content as below:
 
     // [path/to/ghost]/core/server/adapters/storage/tencent-cos.js
 
