@@ -2,7 +2,7 @@
  * @Author: MUHM
  * @Date: 2019-04-30 16:10:23
  * @Last Modified by: MUHM
- * @Last Modified time: 2019-05-02 15:14:36
+ * @Last Modified time: 2019-05-24 16:21:05
  */
 'use strict';
 
@@ -20,16 +20,15 @@ class TencentCOS extends BaseStorage {
 
   exists(filename, targetDir = this.getTargetDir('/')) {
     return new Promise((resolve) => {
-      // function headOject 404
-      this.client.getObjectAcl({
+      this.client.headObject({
         Bucket: this.config.bucket,
         Region: this.config.region,
         Key: path.resolve(targetDir, filename),
-      }, (err) => {
-        if (err && err.error && err.error.Code === 'NoSuchKey') {
+      }, (err, data) => {
+        if (err) {
           resolve(false);
         } else {
-          resolve(true);
+          data.statusCode === 200 ? resolve(true) : resolve(false);
         }
       });
     });
@@ -82,7 +81,22 @@ class TencentCOS extends BaseStorage {
   }
 
   read(options) {
-    // Not needed
+    options = options || {};
+    options.path = (options.path || '').replace(this.config.baseUrl,'').replace(/\/$|\\$/, '');
+    const params = {
+      Bucket: this.config.bucket,
+      Region: this.config.region,
+      Key: options.path,
+    };
+    return new Promise((resolve, reject) => {
+      this.client.getObject(params, (err, data) => {
+        if (err) {
+          resolve(false);
+        } else {
+          resolve(data.Body)
+        }
+      })
+    })
   }
 }
 
