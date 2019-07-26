@@ -1,6 +1,6 @@
 {
   "name": "ghost-tencent-cos",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "saves to Tencent Cloud Object Storage",
   "main": "index.js",
   "scripts": {
