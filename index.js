@@ -2,7 +2,7 @@
  * @Author: MUHM
  * @Date: 2019-04-30 16:10:23
  * @Last Modified by: MUHM
- * @Last Modified time: 2019-07-26 12:25:10
+ * @Last Modified time: 2019-07-26 17:29:32
  */
 'use strict';
 
@@ -47,7 +47,7 @@ class TencentCOS extends BaseStorage {
       return new Promise((resolve, reject) => {
         client.putObject(params, (err, data) => {
           if (err) {
-            reject(err);
+            return reject(err);
           }
           resolve(config.baseUrl + key);
         });
