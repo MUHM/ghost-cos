@@ -2,7 +2,7 @@
  * @Author: MUHM
  * @Date: 2019-04-30 16:10:23
  * @Last Modified by: MUHM
- * @Last Modified time: 2019-07-26 17:29:32
+ * @Last Modified time: 2019-08-05 18:55:48
  */
 'use strict';
 
@@ -19,6 +19,9 @@ class TencentCOS extends BaseStorage {
   }
 
   exists(filename, targetDir = this.getTargetDir('/')) {
+    if (this.config.pathPrefix) {
+      targetDir = `/${this.config.pathPrefix}${targetDir}`;
+    }
     return new Promise((resolve) => {
       this.client.headObject({
         Bucket: this.config.bucket,
@@ -26,15 +29,17 @@ class TencentCOS extends BaseStorage {
         Key: path.resolve(targetDir, filename),
       }, (err, data) => {
         if (err) {
-          resolve(false);
-        } else {
-          data.statusCode === 200 ? resolve(true) : resolve(false);
+          return resolve(false);
         }
+        data.statusCode === 200 ? resolve(true) : resolve(false);
       });
     });
   }
 
   save(file, targetDir = this.getTargetDir('/')) {
+    if (this.config.pathPrefix) {
+      targetDir = `/${this.config.pathPrefix}${targetDir}`;
+    }
     const config = this.config;
     const client = this.client;
     return this.getUniqueFileName(file, targetDir).then(key => {
@@ -49,7 +54,7 @@ class TencentCOS extends BaseStorage {
           if (err) {
             return reject(err);
           }
-          resolve(config.baseUrl + key);
+          resolve(config.baseUrl ? config.baseUrl + key : `//${data.Location}`);
         });
       });
     }).catch(e => {
@@ -64,25 +69,27 @@ class TencentCOS extends BaseStorage {
   }
 
   delete(filename, targetDir = this.getTargetDir('/')) {
+    if (this.config.pathPrefix) {
+      targetDir = `/${this.config.pathPrefix}${targetDir}`;
+    }
     const params = {
       Bucket: this.config.bucket,
       Region: this.config.region,
       Key: path.resolve(targetDir, filename),
     };
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       this.client.deleteObject(params, err => {
         if (err) {
-          resolve(false);
-        } else {
-          resolve(true);
+          return reject(err);
         }
+        resolve(true);
       });
     });
   }
 
   read(options) {
     options = options || {};
-    options.path = (options.path || '').replace(this.config.baseUrl,'').replace(/\/$|\\$/, '');
+    options.path = (options.path || '').replace(this.config.baseUrl, '').replace(/\/$|\\$/, '');
     const params = {
       Bucket: this.config.bucket,
       Region: this.config.region,
@@ -91,10 +98,9 @@ class TencentCOS extends BaseStorage {
     return new Promise((resolve, reject) => {
       this.client.getObject(params, (err, data) => {
         if (err) {
-          resolve(false);
-        } else {
-          resolve(data.Body)
+          return reject(err);
         }
+        resolve(data.Body);
       })
     })
   }

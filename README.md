@@ -23,6 +23,7 @@ Add a storage block to your config.${GHOST_ENVIRONMENT}.json as below:
           "secretId": "{SecretId}",
           "secretKey": "{SecretKey}",
           "baseUrl": "{url}"
+          "pathPrefix":"{pathPrefix}"
         }
       }
     }
