@@ -2,7 +2,7 @@
  * @Author: MUHM
  * @Date: 2019-04-30 16:10:23
  * @Last Modified by: MUHM
- * @Last Modified time: 2019-08-05 18:55:48
+ * @Last Modified time: 2019-08-06 10:13:03
  */
 'use strict';
 
@@ -19,9 +19,6 @@ class TencentCOS extends BaseStorage {
   }
 
   exists(filename, targetDir = this.getTargetDir('/')) {
-    if (this.config.pathPrefix) {
-      targetDir = `/${this.config.pathPrefix}${targetDir}`;
-    }
     return new Promise((resolve) => {
       this.client.headObject({
         Bucket: this.config.bucket,
@@ -69,9 +66,6 @@ class TencentCOS extends BaseStorage {
   }
 
   delete(filename, targetDir = this.getTargetDir('/')) {
-    if (this.config.pathPrefix) {
-      targetDir = `/${this.config.pathPrefix}${targetDir}`;
-    }
     const params = {
       Bucket: this.config.bucket,
       Region: this.config.region,
